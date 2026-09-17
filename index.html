@@ -383,7 +383,7 @@
             <div class="home-bento">
 
                 <!-- Misterios en Curso — protagonista, fila superior izquierda (2 cols) -->
-                <button class="home-card card-indigo bento-misterios group flex items-center gap-4" data-home-nav="en-curso">
+                <button class="home-card card-indigo bento-misterios group flex items-center gap-4" data-home-nav="en-curso" aria-label="Misterios en Curso: investiga los casos abiertos">
                     <div class="card-strip"></div>
                     <span class="select-none flex-shrink-0 transition-transform duration-200 group-hover:scale-110 relative z-10" style="font-size:clamp(1.6rem,4vw,2.2rem)">🔍</span>
                     <div class="flex-1 min-w-0 relative z-10">
@@ -394,7 +394,7 @@
                 </button>
 
                 <!-- Podio -->
-                <button class="home-card card-amber bento-podio group flex flex-col items-center text-center justify-between" data-home-nav="podio">
+                <button class="home-card card-amber bento-podio group flex flex-col items-center text-center justify-between" data-home-nav="podio" aria-label="Podio: clasificación">
                     <div class="card-strip"></div>
                     <span class="select-none transition-transform duration-200 group-hover:scale-110 relative z-10" style="font-size:clamp(1.3rem,3.5vw,1.8rem)">🏆</span>
                     <div class="relative z-10">
@@ -404,7 +404,7 @@
                 </button>
 
                 <!-- Archivo -->
-                <button class="home-card card-sky bento-archivo group flex flex-col items-center text-center justify-between" data-home-nav="archivo">
+                <button class="home-card card-sky bento-archivo group flex flex-col items-center text-center justify-between" data-home-nav="archivo" aria-label="Archivo: casos resueltos">
                     <div class="card-strip"></div>
                     <span class="select-none transition-transform duration-200 group-hover:scale-110 relative z-10" style="font-size:clamp(1.3rem,3.5vw,1.8rem)">📁</span>
                     <div class="relative z-10">
@@ -414,7 +414,7 @@
                 </button>
 
                 <!-- Juego en Equipo — agrupa Equipos, Misterios de Tarde y Escape Rooms -->
-                <button id="team-play-open-btn" type="button" class="home-card bento-equipo group flex flex-col items-center text-center justify-between" style="--card-glow:radial-gradient(ellipse at 10% 10%, rgba(124,58,237,0.14), transparent 65%);--card-border:rgba(167,139,250,0.42);--card-shadow:rgba(124,58,237,0.18);--strip-bg:linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd)">
+                <button id="team-play-open-btn" type="button" class="home-card bento-equipo group flex flex-col items-center text-center justify-between" aria-label="Juego en Equipo: Equipos, Misterios de Tarde y Escape Rooms" style="--card-glow:radial-gradient(ellipse at 10% 10%, rgba(124,58,237,0.14), transparent 65%);--card-border:rgba(167,139,250,0.42);--card-shadow:rgba(124,58,237,0.18);--strip-bg:linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd)">
                     <div class="card-strip"></div>
                     <span class="select-none transition-transform duration-200 group-hover:scale-110 relative z-10" style="font-size:clamp(1.3rem,3.5vw,1.8rem)">🎲</span>
                     <div class="relative z-10">
@@ -424,7 +424,7 @@
                 </button>
 
                 <!-- Sobre el Proyecto -->
-                <button class="home-card card-emerald bento-sobre group flex flex-col items-center text-center justify-between" data-home-nav="sobre">
+                <button class="home-card card-emerald bento-sobre group flex flex-col items-center text-center justify-between" data-home-nav="sobre" aria-label="Sobre el Proyecto: cómo funciona">
                     <div class="card-strip"></div>
                     <span class="select-none transition-transform duration-200 group-hover:scale-110 relative z-10" style="font-size:clamp(1.3rem,3.5vw,1.8rem)">ℹ️</span>
                     <div class="relative z-10">
@@ -444,8 +444,12 @@
                 <h3 class="text-lg font-bold text-slate-100">🎲 Juego en Equipo</h3>
                 <button id="team-play-close-btn" type="button" class="text-slate-400 hover:text-slate-200 text-2xl leading-none px-2">&times;</button>
             </div>
+            <div class="mb-4 flex items-start gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2.5 text-xs text-amber-300">
+                <span class="text-base leading-none flex-shrink-0">🚧</span>
+                <span><strong>Aún en construcción:</strong> esta parte del juego está en desarrollo y puede cambiar o fallar en cualquier momento.</span>
+            </div>
             <div class="flex flex-col gap-3">
-                <button type="button" class="home-card card-amber w-full flex items-center gap-3 text-left" data-home-nav="equipos">
+                <button type="button" class="home-card card-amber w-full flex items-center gap-3 text-left" data-home-nav="equipos" aria-label="Equipos: crea o únete a uno">
                     <div class="card-strip"></div>
                     <span class="select-none text-xl relative z-10 flex-shrink-0">👥</span>
                     <div class="relative z-10">
@@ -453,7 +457,7 @@
                         <div class="card-sublabel">Crea o únete a uno</div>
                     </div>
                 </button>
-                <button type="button" class="home-card card-amber w-full flex items-center gap-3 text-left" data-home-nav="tarde">
+                <button type="button" class="home-card card-amber w-full flex items-center gap-3 text-left" data-home-nav="tarde" aria-label="Misterios de Tarde: una tarde de juego">
                     <div class="card-strip"></div>
                     <span class="select-none text-xl relative z-10 flex-shrink-0">🌆</span>
                     <div class="relative z-10">
@@ -461,7 +465,7 @@
                         <div class="card-sublabel">Una tarde de juego</div>
                     </div>
                 </button>
-                <button type="button" class="home-card w-full flex items-center gap-3 text-left" data-home-nav="escape" style="--card-glow:radial-gradient(ellipse at 10% 10%, rgba(124,58,237,0.14), transparent 65%);--card-border:rgba(167,139,250,0.42);--card-shadow:rgba(124,58,237,0.18);--strip-bg:linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd)">
+                <button type="button" class="home-card w-full flex items-center gap-3 text-left" data-home-nav="escape" aria-label="Escape Rooms: salas, códigos y contrarreloj" style="--card-glow:radial-gradient(ellipse at 10% 10%, rgba(124,58,237,0.14), transparent 65%);--card-border:rgba(167,139,250,0.42);--card-shadow:rgba(124,58,237,0.18);--strip-bg:linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd)">
                     <div class="card-strip"></div>
                     <span class="select-none text-xl relative z-10 flex-shrink-0">🔐</span>
                     <div class="relative z-10">
@@ -484,11 +488,19 @@
          compartido para todos los misterios — simple y fácil de encontrar. -->
 
         <!-- Ajuste Nav: justify-start en mobile para scroll sin cortes, md:justify-center -->
-        <nav id="main-tabs-nav" class="flex justify-center mb-8">
+        <nav id="main-tabs-nav" class="flex justify-center items-center mb-8">
             <button id="home-btn" class="tab-button text-gray-400 hover:bg-white/10 font-semibold py-2.5 px-5 rounded-full border border-white/10 transition whitespace-nowrap flex items-center gap-1.5 text-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                 Inicio
             </button>
+            <!-- Acceso rápido entre Equipos / Tarde / Escape Rooms: solo visible cuando estás dentro
+                 de una de las tres, para no tener que volver a Inicio y reabrir el menú "Juego en Equipo"
+                 cada vez. Se muestra/oculta desde updateTeamQuickSwitch(). -->
+            <div id="team-quick-switch" class="hidden flex items-center gap-1.5 ml-1.5">
+                <button type="button" data-quick-tab="equipos" title="Ir a Equipos" aria-label="Ir a Equipos" class="text-amber-400 hover:bg-amber-900/20 font-semibold py-2.5 px-4 rounded-full border border-amber-500/20 transition whitespace-nowrap text-sm">👥</button>
+                <button type="button" data-quick-tab="tarde" title="Ir a Misterios de Tarde" aria-label="Ir a Misterios de Tarde" class="text-amber-400 hover:bg-amber-900/20 font-semibold py-2.5 px-4 rounded-full border border-amber-500/20 transition whitespace-nowrap text-sm">🌆</button>
+                <button type="button" data-quick-tab="escape" title="Ir a Escape Rooms" aria-label="Ir a Escape Rooms" class="text-violet-400 hover:bg-violet-900/20 font-semibold py-2.5 px-4 rounded-full border border-violet-500/20 transition whitespace-nowrap text-sm">🔐</button>
+            </div>
             <!-- Estas pestañas ya están duplicadas como tarjetas en la portada, así que se ocultan aquí
                  para no repetir la navegación. Se mantienen en el DOM (no se borran) porque el tour
                  guiado interactivo navega haciendo clic directamente sobre ellas — .click() funciona
@@ -4619,6 +4631,28 @@
         }
 
         function initEventListeners() {
+            // Grupo de acceso rápido Equipos/Tarde/Escape junto a "← Inicio": solo se muestra
+            // mientras estás dentro de una de esas tres, con la sección actual oculta y las
+            // otras dos como atajo directo (sin pasar por Inicio ni reabrir el menú).
+            const TEAM_PLAY_TABS = ['equipos', 'tarde', 'escape'];
+            const teamQuickSwitch = document.getElementById('team-quick-switch');
+            function updateTeamQuickSwitch(targetId) {
+                if (!teamQuickSwitch) return;
+                if (!TEAM_PLAY_TABS.includes(targetId)) {
+                    teamQuickSwitch.classList.add('hidden');
+                    return;
+                }
+                teamQuickSwitch.classList.remove('hidden');
+                teamQuickSwitch.querySelectorAll('[data-quick-tab]').forEach(btn => {
+                    btn.classList.toggle('hidden', btn.dataset.quickTab === targetId);
+                });
+            }
+            teamQuickSwitch?.querySelectorAll('[data-quick-tab]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelector(`.tab-button[data-tab="${btn.dataset.quickTab}"]`)?.click();
+                });
+            });
+
             dom.tabs.forEach(tab => tab.addEventListener('click', (event) => {
                 const targetId = event.currentTarget.dataset.tab;
                 dom.tabs.forEach(t => t.classList.remove('active')); event.currentTarget.classList.add('active');
@@ -4627,6 +4661,7 @@
                     // Recargar podio si cambió la selección
                      loadLeaderboard(currentPodiumSeasonId === 'general' ? null : allSeasons.find(s=>s.id === currentPodiumSeasonId).gameIds);
                 }
+                updateTeamQuickSwitch(targetId);
             }));
 
             // ── Pantalla de Inicio ───────────────────────────────────────────────────
