@@ -145,7 +145,7 @@
         }
 
         /* Blobs decorativos SVG — orgánicos, no rectángulos */
-        .home-blob { position:absolute; pointer-events:none; overflow:hidden; inset:0; }
+        .app-blob { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: -1; }
 
         /* Título con gradiente — más luminoso para buen contraste */
         .home-title {
@@ -329,6 +329,17 @@
 <body class="text-gray-200">
     <a href="#home-screen" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[999] focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">Saltar al contenido principal</a>
 
+    <!-- Fondo decorativo — mismos blobs orgánicos de la portada, ahora fijos detrás de TODA
+         la app (portada y pestañas), muy tenues, para que no haya un salto de ambiente al
+         entrar en una sección. Puramente visual: pointer-events:none, aria-hidden. -->
+    <div class="app-blob" aria-hidden="true">
+        <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:100%;height:100%;top:0;left:0;opacity:0.35">
+            <path d="M180,60 Q320,-30 460,70 Q620,160 600,310 Q580,460 420,500 Q260,540 150,430 Q40,320 80,200 Q110,110 180,60Z" fill="rgba(79,70,229,0.10)"/>
+            <path d="M620,180 Q740,250 730,380 Q720,500 610,530 Q500,560 440,480 Q370,400 420,310 Q470,220 560,195 Q590,183 620,180Z" fill="rgba(139,92,246,0.08)"/>
+            <path d="M50,450 Q110,390 200,430 Q290,470 270,550 Q250,620 170,630 Q90,640 50,570 Q20,510 50,450Z" fill="rgba(99,102,241,0.06)"/>
+        </svg>
+    </div>
+
     <!-- ═══ BARRA FIJA SUPERIOR (siempre visible) ══════════════════════════ -->
     <!-- top-bar es fixed+relative para que notif-panel (absolute) se ancle al borde derecho de pantalla -->
     <header id="top-bar" class="fixed top-0 right-0 flex items-center gap-2 z-30 p-3" style="position:fixed">
@@ -361,15 +372,6 @@
 
     <!-- ═══ PANTALLA DE INICIO ════════════════════════════════════════════ -->
     <main id="home-screen" tabindex="-1" class="min-h-screen flex flex-col items-center justify-center p-5 pb-12" style="padding-top:max(3.5rem, env(safe-area-inset-top, 0px) + 3rem)">
-
-        <!-- Blobs decorativos (SVG orgánico, no rectángulos) -->
-        <div class="home-blob" aria-hidden="true">
-            <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:100%;height:100%;top:0;left:0;opacity:0.6">
-                <path d="M180,60 Q320,-30 460,70 Q620,160 600,310 Q580,460 420,500 Q260,540 150,430 Q40,320 80,200 Q110,110 180,60Z" fill="rgba(79,70,229,0.10)"/>
-                <path d="M620,180 Q740,250 730,380 Q720,500 610,530 Q500,560 440,480 Q370,400 420,310 Q470,220 560,195 Q590,183 620,180Z" fill="rgba(139,92,246,0.08)"/>
-                <path d="M50,450 Q110,390 200,430 Q290,470 270,550 Q250,620 170,630 Q90,640 50,570 Q20,510 50,450Z" fill="rgba(99,102,241,0.06)"/>
-            </svg>
-        </div>
 
         <div class="w-full relative z-10" style="max-width:clamp(460px, 58vw, 700px)">
 
