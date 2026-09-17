@@ -20,6 +20,20 @@
 
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #111827; }
+
+        /* ── "Opción media": mismo tratamiento de cristal (backdrop-blur) que ya usan
+           .home-card y .modal-panel, extendido a todas las cajas de contenido sueltas
+           repartidas por la app (bg-gray-700/800/900/950 translúcidos). Selector por
+           substring para no tener que tocar cada aparición una por una — solo añade
+           el desenfoque, no toca color de fondo ni bordes (algunos llevan bordes de
+           color con significado propio, p.ej. resultados en verde/índigo). */
+        [class*="bg-gray-700/"],
+        [class*="bg-gray-800/"],
+        [class*="bg-gray-900/"],
+        [class*="bg-gray-950/"] {
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.6s ease-out forwards; }
         .tab-button.active { background-color: #4f46e5; color: #ffffff; border-color: rgba(129,140,248,0.6); }
