@@ -164,14 +164,12 @@
             grid-template-rows:
                 clamp(110px, min(20vw, 18vh), 175px)
                 clamp(112px, min(18vw, 16vh), 155px)
-                clamp(112px, min(18vw, 16vh), 155px)
                 clamp(80px,  min(14vw, 12vh), 120px)
                 clamp(80px,  min(14vw, 12vh), 120px);
             grid-template-areas:
                 "misterios misterios"
                 "podio     archivo"
-                "equipos   tarde"
-                "escape    escape"
+                "equipo    equipo"
                 "sobre     sobre";
             gap: clamp(8px, min(1.5vw, 1.4vh), 14px);
         }
@@ -180,7 +178,7 @@
                 grid-template-columns: 1fr;
                 grid-template-rows: none;
                 grid-template-areas:
-                    "misterios" "podio" "archivo" "equipos" "tarde" "escape" "sobre";
+                    "misterios" "podio" "archivo" "equipo" "sobre";
             }
             .bento-misterios { min-height: 88px; }
         }
@@ -188,9 +186,7 @@
         .bento-misterios { grid-area: misterios; }
         .bento-podio     { grid-area: podio; }
         .bento-archivo   { grid-area: archivo; }
-        .bento-equipos   { grid-area: equipos; border-radius: clamp(20px,3.5vw,32px) clamp(12px,2vw,18px) clamp(12px,2vw,18px) clamp(20px,3.5vw,32px); }
-        .bento-tarde     { grid-area: tarde; border-radius: clamp(12px,2vw,18px) clamp(20px,3.5vw,32px) clamp(20px,3.5vw,32px) clamp(12px,2vw,18px); }
-        .bento-escape    { grid-area: escape; border-radius: clamp(18px,3vw,28px); }
+        .bento-equipo    { grid-area: equipo; border-radius: clamp(18px,3vw,28px); }
         .bento-sobre     { grid-area: sobre; border-radius: clamp(18px,3vw,28px); }
 
         /* Tarjeta base — cristal con borde sutil */
@@ -419,33 +415,13 @@
                     </div>
                 </button>
 
-                <!-- Equipos -->
-                <button class="home-card card-amber bento-equipos group flex flex-col items-center text-center justify-between" data-home-nav="equipos">
+                <!-- Juego en Equipo — agrupa Equipos, Misterios de Tarde y Escape Rooms -->
+                <button id="team-play-open-btn" type="button" class="home-card bento-equipo p-4 group flex items-center justify-center gap-3 text-center" style="--card-glow:radial-gradient(ellipse at 10% 10%, rgba(124,58,237,0.14), transparent 65%);--card-border:rgba(167,139,250,0.42);--card-shadow:rgba(124,58,237,0.18);--strip-bg:linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd)">
                     <div class="card-strip"></div>
-                    <span class="select-none transition-transform duration-200 group-hover:scale-110 relative z-10" style="font-size:clamp(1.3rem,3.5vw,1.8rem)">👥</span>
+                    <span class="select-none transition-transform duration-200 group-hover:scale-110 relative z-10 flex-shrink-0" style="font-size:clamp(1.4rem,3.5vw,1.9rem)">🎲</span>
                     <div class="relative z-10">
-                        <div class="card-label">Equipos</div>
-                        <div class="card-sublabel">Crea o únete a uno</div>
-                    </div>
-                </button>
-
-                <!-- Misterios de Tarde -->
-                <button class="home-card card-amber bento-tarde group flex flex-col items-center text-center justify-between" data-home-nav="tarde">
-                    <div class="card-strip"></div>
-                    <span class="select-none transition-transform duration-200 group-hover:scale-110 relative z-10" style="font-size:clamp(1.3rem,3.5vw,1.8rem)">🌆</span>
-                    <div class="relative z-10">
-                        <div class="card-label">Misterios de Tarde</div>
-                        <div class="card-sublabel">Una tarde de juego</div>
-                    </div>
-                </button>
-
-                <!-- Escape Rooms — fila completa, texto centrado -->
-                <button class="home-card bento-escape p-4 group flex items-center justify-center gap-3 text-center" data-home-nav="escape" style="--card-glow:radial-gradient(ellipse at 10% 10%, rgba(124,58,237,0.14), transparent 65%);--card-border:rgba(167,139,250,0.42);--card-shadow:rgba(124,58,237,0.18);--strip-bg:linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd)">
-                    <div class="card-strip"></div>
-                    <span class="select-none transition-transform duration-200 group-hover:scale-110 relative z-10 flex-shrink-0" style="font-size:clamp(1.4rem,3.5vw,1.9rem)">🔐</span>
-                    <div class="relative z-10">
-                        <div class="card-label" style="font-size:clamp(0.85rem,2.2vw,1.05rem)">Escape Rooms</div>
-                        <div class="card-sublabel">Salas, códigos y contrarreloj</div>
+                        <div class="card-label" style="font-size:clamp(0.85rem,2.2vw,1.05rem)">Juego en Equipo</div>
+                        <div class="card-sublabel">Equipos, Tarde y Escape Rooms</div>
                     </div>
                 </button>
 
@@ -462,6 +438,42 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal: menú "Juego en Equipo" (agrupa Equipos, Misterios de Tarde y Escape Rooms) -->
+    <div id="team-play-modal" class="modal fixed inset-0 bg-black bg-opacity-80 items-center justify-center p-4 z-[55]">
+        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-sm p-5" style="--panel-strip:linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd)">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-slate-100">🎲 Juego en Equipo</h3>
+                <button id="team-play-close-btn" type="button" class="text-slate-400 hover:text-slate-200 text-2xl leading-none px-2">&times;</button>
+            </div>
+            <div class="flex flex-col gap-3">
+                <button type="button" class="home-card card-amber w-full flex items-center gap-3 text-left" data-home-nav="equipos">
+                    <div class="card-strip"></div>
+                    <span class="select-none text-xl relative z-10 flex-shrink-0">👥</span>
+                    <div class="relative z-10">
+                        <div class="card-label">Equipos</div>
+                        <div class="card-sublabel">Crea o únete a uno</div>
+                    </div>
+                </button>
+                <button type="button" class="home-card card-amber w-full flex items-center gap-3 text-left" data-home-nav="tarde">
+                    <div class="card-strip"></div>
+                    <span class="select-none text-xl relative z-10 flex-shrink-0">🌆</span>
+                    <div class="relative z-10">
+                        <div class="card-label">Misterios de Tarde</div>
+                        <div class="card-sublabel">Una tarde de juego</div>
+                    </div>
+                </button>
+                <button type="button" class="home-card w-full flex items-center gap-3 text-left" data-home-nav="escape" style="--card-glow:radial-gradient(ellipse at 10% 10%, rgba(124,58,237,0.14), transparent 65%);--card-border:rgba(167,139,250,0.42);--card-shadow:rgba(124,58,237,0.18);--strip-bg:linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd)">
+                    <div class="card-strip"></div>
+                    <span class="select-none text-xl relative z-10 flex-shrink-0">🔐</span>
+                    <div class="relative z-10">
+                        <div class="card-label">Escape Rooms</div>
+                        <div class="card-sublabel">Salas, códigos y contrarreloj</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- ═══ VISTA PRINCIPAL (tabs + contenido) ════════════════════════════ -->
     <div id="main-app-view" class="hidden container mx-auto px-4 pb-8 md:px-8 md:pb-8 max-w-4xl relative">
@@ -2852,9 +2864,9 @@
                 {
                     selector: '[data-home-nav="equipos"]',
                     title: 'Volvemos a inicio',
-                    text: 'Y desde aquí entrarías a Equipos.',
+                    text: 'Equipos, Misterios de Tarde y Escape Rooms viven juntos aquí, en "🎲 Juego en Equipo". Pulsando esta tarjeta entrarías a Equipos.',
                     advanceOnClick: true,
-                    before: async () => { tourCloseAllModals(); showHomeScreen(); }
+                    before: async () => { tourCloseAllModals(); showHomeScreen(); document.getElementById('team-play-modal')?.classList.add('active'); }
                 },
                 {
                     selector: '#my-teams-container',
@@ -2865,9 +2877,9 @@
                 {
                     selector: '[data-home-nav="tarde"]',
                     title: 'Volvemos a inicio',
-                    text: 'Y desde aquí, a Misterios de Tarde.',
+                    text: 'Y desde el mismo menú "🎲 Juego en Equipo", a Misterios de Tarde.',
                     advanceOnClick: true,
-                    before: async () => { tourCloseAllModals(); showHomeScreen(); }
+                    before: async () => { tourCloseAllModals(); showHomeScreen(); document.getElementById('team-play-modal')?.classList.add('active'); }
                 },
                 {
                     selector: '#tarde-games-container',
@@ -2878,9 +2890,9 @@
                 {
                     selector: '[data-home-nav="escape"]',
                     title: 'Volvemos a inicio',
-                    text: 'Y desde aquí, a Escape Rooms.',
+                    text: 'Y ahí mismo, a Escape Rooms.',
                     advanceOnClick: true,
-                    before: async () => { tourCloseAllModals(); showHomeScreen(); }
+                    before: async () => { tourCloseAllModals(); showHomeScreen(); document.getElementById('team-play-modal')?.classList.add('active'); }
                 },
                 {
                     selector: '#escape-games-container',
@@ -3046,6 +3058,7 @@
             dom.resolverModal.classList.remove('active');
             dom.idModal.classList.remove('active');
             dom.welcomeModal.classList.remove('active');
+            document.getElementById('team-play-modal')?.classList.remove('active');
             closeNotes();
         }
 
@@ -4678,6 +4691,27 @@
             document.querySelectorAll('[data-home-nav]').forEach(btn => {
                 btn.addEventListener('click', () => handleHomeNav(btn.dataset.homeNav));
             });
+
+            // Menú "Juego en Equipo" — agrupa Equipos, Tarde y Escape Rooms en un solo bubble
+            const teamPlayModal    = document.getElementById('team-play-modal');
+            const teamPlayOpenBtn  = document.getElementById('team-play-open-btn');
+            const teamPlayCloseBtn = document.getElementById('team-play-close-btn');
+            if (teamPlayOpenBtn && teamPlayModal) {
+                teamPlayOpenBtn.addEventListener('click', () => teamPlayModal.classList.add('active'));
+            }
+            if (teamPlayCloseBtn && teamPlayModal) {
+                teamPlayCloseBtn.addEventListener('click', () => teamPlayModal.classList.remove('active'));
+            }
+            if (teamPlayModal) {
+                // Cerrar al tocar el fondo oscuro
+                teamPlayModal.addEventListener('click', (e) => {
+                    if (e.target === teamPlayModal) teamPlayModal.classList.remove('active');
+                });
+                // Cerrar el menú al elegir una opción (la navegación ya la gestiona el listener de arriba)
+                teamPlayModal.querySelectorAll('[data-home-nav]').forEach(btn => {
+                    btn.addEventListener('click', () => teamPlayModal.classList.remove('active'));
+                });
+            }
 
             // Botón ← Inicio en la nav
             if (homeBtn) homeBtn.addEventListener('click', showHomeScreen);
