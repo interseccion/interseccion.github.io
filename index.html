@@ -162,6 +162,7 @@
            La clase la decide un pequeño script al cargar (ver más abajo, junto al <body>). */
         body.theme-halloween { --blob-1: rgba(234,88,12,0.14); --blob-2: rgba(88,28,135,0.12); --blob-3: rgba(154,52,18,0.08); }
         body.theme-navidad   { --blob-1: rgba(185,28,28,0.11); --blob-2: rgba(21,128,61,0.10);  --blob-3: rgba(202,138,4,0.09); }
+        body.theme-prueba    { --blob-1: rgba(219,39,119,0.13); --blob-2: rgba(245,158,11,0.13); --blob-3: rgba(251,191,36,0.09); }
 
         /* Título con gradiente — más luminoso para buen contraste */
         .home-title {
@@ -348,11 +349,15 @@
         // Se decide aquí, lo antes posible, para que no haya parpadeo del color por defecto.
         (function applySeasonalTheme() {
             const now = new Date();
+            const y = now.getFullYear();
             const m = now.getMonth() + 1; // 1–12
             const d = now.getDate();
             const isHalloween = (m === 10 && d >= 15) || (m === 11 && d === 1);
             const isNavidad   = (m === 12 && d >= 15) || (m === 1 && d <= 6);
-            if (isHalloween) document.body.classList.add('theme-halloween');
+            // Prueba puntual, solo hoy y mañana (18–19 sep 2026) — quitar cuando ya no haga falta.
+            const isPrueba    = (y === 2026 && m === 9 && (d === 18 || d === 19));
+            if (isPrueba) document.body.classList.add('theme-prueba');
+            else if (isHalloween) document.body.classList.add('theme-halloween');
             else if (isNavidad) document.body.classList.add('theme-navidad');
         })();
     </script>
