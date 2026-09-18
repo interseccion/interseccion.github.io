@@ -29,7 +29,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #111827; }
+        body { font-family: 'Inter', sans-serif; background-color: color-mix(in srgb, #111827 94%, var(--accent-900) 6%); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.6s ease-out forwards; }
@@ -60,12 +60,12 @@
         #notes-fab {
             position: fixed; bottom: 24px; right: 24px; z-index: 40;
             width: 48px; height: 48px; border-radius: 50%;
-            background: #4f46e5; color: white; border: none; cursor: pointer;
+            background: var(--accent-600); color: white; border: none; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 16px rgba(79,70,229,.5);
+            box-shadow: 0 4px 16px color-mix(in srgb, var(--accent-600) 50%, transparent);
             transition: transform .15s, box-shadow .15s;
         }
-        #notes-fab:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(79,70,229,.7); }
+        #notes-fab:hover { transform: scale(1.08); box-shadow: 0 6px 20px color-mix(in srgb, var(--accent-600) 70%, transparent); }
         #notes-fab .notes-dot {
             position: absolute; top: 6px; right: 6px; width: 8px; height: 8px;
             border-radius: 50%; background: #f0e68c; display: none;
