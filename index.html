@@ -158,15 +158,75 @@
         /* Blobs decorativos SVG — orgánicos, no rectángulos */
         .app-blob { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: -1; }
 
-        /* ── Fondo por ocasión: mismos blobs, distinta paleta según la fecha.
-           La clase la decide un pequeño script al cargar (ver más abajo, junto al <body>). */
-        body.theme-halloween { --blob-1: rgba(234,88,12,0.14); --blob-2: rgba(88,28,135,0.12); --blob-3: rgba(154,52,18,0.08); }
-        body.theme-navidad   { --blob-1: rgba(185,28,28,0.11); --blob-2: rgba(21,128,61,0.10);  --blob-3: rgba(202,138,4,0.09); }
-        body.theme-prueba    { --blob-1: rgba(219,39,119,0.13); --blob-2: rgba(245,158,11,0.13); --blob-3: rgba(251,191,36,0.09); }
+        /* ── Tema por ocasión: variables de acento (además del blob de fondo).
+           Por defecto son el índigo de siempre; cada tema las redefine. */
+        :root {
+            --accent-200: #c7d2fe; --accent-300: #a5b4fc; --accent-400: #818cf8;
+            --accent-500: #6366f1; --accent-600: #4f46e5; --accent-700: #4338ca;
+            --accent-800: #3730a3; --accent-900: #312e81;
+            --title-grad-1: #e0e7ff; --title-grad-2: #a5b4fc; --title-grad-3: #c4b5fd; --title-grad-4: #f0abfc;
+        }
+        body.theme-halloween {
+            --blob-1: rgba(234,88,12,0.14); --blob-2: rgba(88,28,135,0.12); --blob-3: rgba(154,52,18,0.08);
+            --accent-200: #fed7aa; --accent-300: #fdba74; --accent-400: #fb923c;
+            --accent-500: #f97316; --accent-600: #ea580c; --accent-700: #c2410c;
+            --accent-800: #9a3412; --accent-900: #7c2d12;
+            --title-grad-1: #ffedd5; --title-grad-2: #fdba74; --title-grad-3: #fb923c; --title-grad-4: #7c2d12;
+        }
+        body.theme-navidad {
+            --blob-1: rgba(185,28,28,0.11); --blob-2: rgba(21,128,61,0.10); --blob-3: rgba(202,138,4,0.09);
+            --accent-200: #fecaca; --accent-300: #fca5a5; --accent-400: #f87171;
+            --accent-500: #ef4444; --accent-600: #dc2626; --accent-700: #b91c1c;
+            --accent-800: #991b1b; --accent-900: #7f1d1d;
+            --title-grad-1: #fee2e2; --title-grad-2: #fca5a5; --title-grad-3: #86efac; --title-grad-4: #facc15;
+        }
+        body.theme-prueba {
+            --blob-1: rgba(219,39,119,0.13); --blob-2: rgba(245,158,11,0.13); --blob-3: rgba(251,191,36,0.09);
+            --accent-200: #fbcfe8; --accent-300: #f9a8d4; --accent-400: #f472b6;
+            --accent-500: #ec4899; --accent-600: #db2777; --accent-700: #be185d;
+            --accent-800: #9d174d; --accent-900: #831843;
+            --title-grad-1: #fce7f3; --title-grad-2: #f9a8d4; --title-grad-3: #fbbf24; --title-grad-4: #db2777;
+        }
+
+        /* ── Reskin por ocasión: todo lo que usa el índigo "de marca" (botones, campana,
+           bordes, textos) pasa por estas variables, para que cambie junto al fondo.
+           Selectores exactos (no por substring) para no tocar hover/estados sin querer. */
+        .bg-indigo-400 { background-color: var(--accent-400) !important; }
+        .bg-indigo-500 { background-color: var(--accent-500) !important; }
+        .bg-indigo-600 { background-color: var(--accent-600) !important; }
+        .bg-indigo-700 { background-color: var(--accent-700) !important; }
+        .bg-indigo-800 { background-color: var(--accent-800) !important; }
+        .bg-indigo-900\/20 { background-color: color-mix(in srgb, var(--accent-900) 20%, transparent) !important; }
+        .bg-indigo-900\/30 { background-color: color-mix(in srgb, var(--accent-900) 30%, transparent) !important; }
+        .bg-indigo-900\/40 { background-color: color-mix(in srgb, var(--accent-900) 40%, transparent) !important; }
+        .bg-indigo-900\/50 { background-color: color-mix(in srgb, var(--accent-900) 50%, transparent) !important; }
+        .hover\:bg-indigo-500:hover { background-color: var(--accent-500) !important; }
+        .hover\:bg-indigo-700:hover { background-color: var(--accent-700) !important; }
+        .hover\:bg-indigo-800:hover { background-color: var(--accent-800) !important; }
+
+        .text-indigo-200 { color: var(--accent-200) !important; }
+        .text-indigo-300 { color: var(--accent-300) !important; }
+        .text-indigo-400 { color: var(--accent-400) !important; }
+        .text-indigo-400\/70 { color: color-mix(in srgb, var(--accent-400) 70%, transparent) !important; }
+        .hover\:text-indigo-200:hover { color: var(--accent-200) !important; }
+        .hover\:text-indigo-300:hover { color: var(--accent-300) !important; }
+
+        .border-indigo-400 { border-color: var(--accent-400) !important; }
+        .border-indigo-500 { border-color: var(--accent-500) !important; }
+        .border-indigo-500\/30 { border-color: color-mix(in srgb, var(--accent-500) 30%, transparent) !important; }
+        .border-indigo-500\/40 { border-color: color-mix(in srgb, var(--accent-500) 40%, transparent) !important; }
+        .border-indigo-700\/40 { border-color: color-mix(in srgb, var(--accent-700) 40%, transparent) !important; }
+        .border-indigo-700\/50 { border-color: color-mix(in srgb, var(--accent-700) 50%, transparent) !important; }
+        .border-indigo-800\/40 { border-color: color-mix(in srgb, var(--accent-800) 40%, transparent) !important; }
+        .hover\:border-indigo-400:hover { border-color: var(--accent-400) !important; }
+
+        .ring-indigo-400 { --tw-ring-color: var(--accent-400) !important; }
+        .ring-indigo-500 { --tw-ring-color: var(--accent-500) !important; }
+        .from-indigo-500 { --tw-gradient-from: var(--accent-500) var(--tw-gradient-from-position) !important; }
 
         /* Título con gradiente — más luminoso para buen contraste */
         .home-title {
-            background: linear-gradient(130deg, #e0e7ff 0%, #a5b4fc 40%, #c4b5fd 75%, #f0abfc 100%);
+            background: linear-gradient(130deg, var(--title-grad-1) 0%, var(--title-grad-2) 40%, var(--title-grad-3) 75%, var(--title-grad-4) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -313,7 +373,7 @@
         .section-hero-title {
             font-weight: 800;
             letter-spacing: -0.02em;
-            background: linear-gradient(130deg, #e0e7ff 0%, #a5b4fc 40%, #c4b5fd 75%, #f0abfc 100%);
+            background: linear-gradient(130deg, var(--title-grad-1) 0%, var(--title-grad-2) 40%, var(--title-grad-3) 75%, var(--title-grad-4) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -356,9 +416,12 @@
             const isNavidad   = (m === 12 && d >= 15) || (m === 1 && d <= 6);
             // Prueba puntual, solo hoy y mañana (18–19 sep 2026) — quitar cuando ya no haga falta.
             const isPrueba    = (y === 2026 && m === 9 && (d === 18 || d === 19));
-            if (isPrueba) document.body.classList.add('theme-prueba');
-            else if (isHalloween) document.body.classList.add('theme-halloween');
-            else if (isNavidad) document.body.classList.add('theme-navidad');
+            let themeColor = '#4f46e5'; // índigo, el de siempre
+            if (isPrueba) { document.body.classList.add('theme-prueba'); themeColor = '#db2777'; }
+            else if (isHalloween) { document.body.classList.add('theme-halloween'); themeColor = '#ea580c'; }
+            else if (isNavidad) { document.body.classList.add('theme-navidad'); themeColor = '#dc2626'; }
+            const themeMeta = document.querySelector('meta[name="theme-color"]');
+            if (themeMeta) themeMeta.setAttribute('content', themeColor);
         })();
     </script>
     <a href="#home-screen" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[999] focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">Saltar al contenido principal</a>
@@ -367,7 +430,7 @@
          la app (portada y pestañas), muy tenues, para que no haya un salto de ambiente al
          entrar en una sección. Puramente visual: pointer-events:none, aria-hidden. -->
     <div class="app-blob" aria-hidden="true">
-        <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:100%;height:100%;top:0;left:0;opacity:0.35">
+        <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:100%;height:100%;top:0;left:0;opacity:0.6">
             <path d="M180,60 Q320,-30 460,70 Q620,160 600,310 Q580,460 420,500 Q260,540 150,430 Q40,320 80,200 Q110,110 180,60Z" style="fill:var(--blob-1, rgba(79,70,229,0.10))"/>
             <path d="M620,180 Q740,250 730,380 Q720,500 610,530 Q500,560 440,480 Q370,400 420,310 Q470,220 560,195 Q590,183 620,180Z" style="fill:var(--blob-2, rgba(139,92,246,0.08))"/>
             <path d="M50,450 Q110,390 200,430 Q290,470 270,550 Q250,620 170,630 Q90,640 50,570 Q20,510 50,450Z" style="fill:var(--blob-3, rgba(99,102,241,0.06))"/>
