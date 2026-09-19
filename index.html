@@ -310,6 +310,12 @@
             padding: clamp(14px, 3vw, 22px);
             transition: transform 0.18s ease, box-shadow 0.2s ease, border-color 0.18s ease, background 0.18s ease;
         }
+        /* Tarjetas de misterio individuales (Misterios en Curso y Archivo) — más opacas,
+           para que el texto se lea bien siempre, sin depender de lo que haya de fondo.
+           Las burbujas de la portada (.bento-*) no se tocan, siguen con su cristal tenue. */
+        #en-curso .home-card, #archivo .home-card {
+            background: rgba(17, 24, 39, 0.82);
+        }
         .home-card::after {
             content: '';
             position: absolute;
