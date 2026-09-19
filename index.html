@@ -29,7 +29,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: color-mix(in srgb, #111827 94%, var(--accent-900) 6%); }
+        body { font-family: 'Inter', sans-serif; background-color: color-mix(in srgb, #111827 90%, var(--accent-900) 10%); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.6s ease-out forwards; }
@@ -157,6 +157,7 @@
 
         /* Blobs decorativos SVG — orgánicos, no rectángulos */
         .app-blob { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: -1; }
+        .app-blob svg { filter: blur(10px); }
 
         /* ── Tema por ocasión: variables de acento (además del blob de fondo).
            Por defecto son el índigo de siempre; cada tema las redefine. */
