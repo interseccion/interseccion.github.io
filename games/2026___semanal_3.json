@@ -1,0 +1,48 @@
+{
+  "id": "a3bdc4d1-5110-470d-84d6-ef57bd94dbc8",
+  "title": "2026 - Semanal 3",
+  "type": "Semanal",
+  "difficulty": "Medio",
+  "mystery": "Un animal",
+  "showMystery": false,
+  "notes": "¡Hola, buen comienzo de curso! Volvemos con fuerza... Pistas los viernes a las seis.",
+  "startDate": "2026-09-11",
+  "googleFormLink": "https://forms.gle/VVMt2tku3YKPMQsSA",
+  "formEntryId": "",
+  "clues": [
+    {
+      "type": "image",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/4pista1.png",
+      "text": null,
+      "publishDate": "2026-09-11T18:00"
+    },
+    {
+      "type": "image",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/4pista2.png",
+      "text": null,
+      "publishDate": "2026-09-18T18:00"
+    },
+    {
+      "type": "image",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/4pista3.png",
+      "text": null,
+      "publishDate": "2026-09-25T18:00"
+    },
+    {
+      "type": "image",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/4pista4.png",
+      "text": null,
+      "publishDate": "2026-10-02T18:00"
+    }
+  ],
+  "isSolved": false,
+  "endDate": "",
+  "solution": "",
+  "winner": "",
+  "winnerId": "",
+  "explanation": "",
+  "winnerExplanation": "",
+  "bibliography": "Imágenes generadas con IA",
+  "utd": 168,
+  "lastUpdated": "2026-09-19T19:14:29.750Z"
+}
