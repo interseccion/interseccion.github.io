@@ -313,7 +313,7 @@
         /* Tarjetas de misterio individuales (Misterios en Curso y Archivo) — más opacas,
            para que el texto se lea bien siempre, sin depender de lo que haya de fondo.
            Las burbujas de la portada (.bento-*) no se tocan, siguen con su cristal tenue. */
-        #en-curso .home-card, #archivo .home-card {
+        #en-curso .home-card, #archivo .home-card, #tarde-games-container .home-card, #escape-games-container .home-card {
             background: rgba(17, 24, 39, 0.82);
         }
         .home-card::after {
@@ -355,7 +355,12 @@
         .home-card:hover .card-strip { opacity: 1; }
 
         /* Colores por sección — contraste AAA garantizado sobre fondo oscuro */
-        .card-indigo  { --card-glow: radial-gradient(ellipse at 10% 10%, rgba(99,102,241,0.18), transparent 65%);  --card-border: rgba(129,140,248,0.5);  --card-shadow: rgba(79,70,229,0.25);   --strip-bg: linear-gradient(90deg,#4f46e5,#818cf8,#a5b4fc); }
+        .card-indigo  {
+            --card-glow: radial-gradient(ellipse at 10% 10%, color-mix(in srgb, var(--accent-500) 18%, transparent), transparent 65%);
+            --card-border: color-mix(in srgb, var(--accent-400) 50%, transparent);
+            --card-shadow: color-mix(in srgb, var(--accent-600) 25%, transparent);
+            --strip-bg: linear-gradient(90deg, var(--accent-600), var(--accent-400), var(--accent-300));
+        }
         .card-amber   { --card-glow: radial-gradient(ellipse at 10% 10%, rgba(251,191,36,0.12), transparent 65%);  --card-border: rgba(251,191,36,0.42);   --card-shadow: rgba(245,158,11,0.16);  --strip-bg: linear-gradient(90deg,#b45309,#f59e0b,#fde68a); }
         .card-sky     { --card-glow: radial-gradient(ellipse at 10% 10%, rgba(56,189,248,0.1),  transparent 65%);  --card-border: rgba(56,189,248,0.38);   --card-shadow: rgba(14,165,233,0.14);  --strip-bg: linear-gradient(90deg,#0369a1,#0ea5e9,#7dd3fc); }
         .card-violet  { --card-glow: radial-gradient(ellipse at 10% 10%, rgba(167,139,250,0.14),transparent 65%);  --card-border: rgba(167,139,250,0.45);  --card-shadow: rgba(124,58,237,0.2);   --strip-bg: linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd); }
@@ -6829,6 +6834,52 @@
         </div>
     </div>
 
+
+    <!-- ── Accesibilidad: foco atrapado + devuelto en todos los modales ──────────────
+         Genérico para toda la app: no hace falta tocar cada modal por separado.
+         Detecta que un modal se ha abierto/cerrado mirando su estilo calculado
+         (display), así funciona igual con los que usan .modal/.active y con los
+         que usan .tarde-modal-overlay + .hidden. -->
+    <script>
+        (function genericModalFocusManagement() {
+            let lastFocusedElement = null;
+            const FOCUSABLE_SEL = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+            function getFocusable(container) {
+                return Array.from(container.querySelectorAll(FOCUSABLE_SEL)).filter(el => el.offsetParent !== null);
+            }
+            function isVisible(el) { return getComputedStyle(el).display !== 'none'; }
+
+            document.querySelectorAll('.modal, .tarde-modal-overlay').forEach(dialog => {
+                let wasVisible = isVisible(dialog);
+                let keydownHandler = null;
+                const observer = new MutationObserver(() => {
+                    const nowVisible = isVisible(dialog);
+                    if (nowVisible && !wasVisible) {
+                        // Se acaba de abrir: guarda qué tenía el foco y mételo dentro del modal
+                        lastFocusedElement = document.activeElement;
+                        const focusable = getFocusable(dialog);
+                        if (focusable.length) focusable[0].focus();
+                        keydownHandler = (e) => {
+                            if (e.key !== 'Tab') return;
+                            const items = getFocusable(dialog);
+                            if (!items.length) return;
+                            const first = items[0], last = items[items.length - 1];
+                            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+                        };
+                        dialog.addEventListener('keydown', keydownHandler);
+                    } else if (!nowVisible && wasVisible) {
+                        // Se acaba de cerrar: quita el atrapa-foco y devuelve el foco a donde estaba
+                        if (keydownHandler) { dialog.removeEventListener('keydown', keydownHandler); keydownHandler = null; }
+                        if (lastFocusedElement && document.body.contains(lastFocusedElement)) lastFocusedElement.focus();
+                        lastFocusedElement = null;
+                    }
+                    wasVisible = nowVisible;
+                });
+                observer.observe(dialog, { attributes: true, attributeFilter: ['class', 'style'] });
+            });
+        })();
+    </script>
 
 </body>
 </html>
