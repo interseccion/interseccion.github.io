@@ -220,6 +220,41 @@
             --accent-800: #92400e; --accent-900: #78350f;
             --title-grad-1: #fef3c7; --title-grad-2: #fcd34d; --title-grad-3: #f59e0b; --title-grad-4: #78350f;
         }
+        body.theme-primavera {
+            --blob-1: rgba(16,185,129,0.14); --blob-2: rgba(244,114,182,0.12); --blob-3: rgba(52,211,153,0.08);
+            --accent-200: #a7f3d0; --accent-300: #6ee7b7; --accent-400: #34d399;
+            --accent-500: #10b981; --accent-600: #059669; --accent-700: #047857;
+            --accent-800: #065f46; --accent-900: #064e3b;
+            --title-grad-1: #d1fae5; --title-grad-2: #6ee7b7; --title-grad-3: #f9a8d4; --title-grad-4: #047857;
+        }
+        body.theme-verano {
+            --blob-1: rgba(20,184,166,0.14); --blob-2: rgba(251,113,133,0.12); --blob-3: rgba(45,212,191,0.08);
+            --accent-200: #99f6e4; --accent-300: #5eead4; --accent-400: #2dd4bf;
+            --accent-500: #14b8a6; --accent-600: #0d9488; --accent-700: #0f766e;
+            --accent-800: #115e59; --accent-900: #134e4a;
+            --title-grad-1: #ccfbf1; --title-grad-2: #5eead4; --title-grad-3: #fb7185; --title-grad-4: #0f766e;
+        }
+        body.theme-otono {
+            --blob-1: rgba(154,107,46,0.14); --blob-2: rgba(217,119,6,0.10); --blob-3: rgba(120,53,15,0.08);
+            --accent-200: #e7d5b9; --accent-300: #d4b483; --accent-400: #b98b4e;
+            --accent-500: #9c6b2e; --accent-600: #7c5322; --accent-700: #5f3f1a;
+            --accent-800: #452d13; --accent-900: #2e1d0c;
+            --title-grad-1: #f5e9d6; --title-grad-2: #d4b483; --title-grad-3: #9c6b2e; --title-grad-4: #2e1d0c;
+        }
+        body.theme-invierno {
+            --blob-1: rgba(56,189,248,0.14); --blob-2: rgba(203,213,225,0.12); --blob-3: rgba(125,211,252,0.08);
+            --accent-200: #e0f2fe; --accent-300: #bae6fd; --accent-400: #7dd3fc;
+            --accent-500: #38bdf8; --accent-600: #0ea5e9; --accent-700: #0284c7;
+            --accent-800: #075985; --accent-900: #0c4a6e;
+            --title-grad-1: #f0f9ff; --title-grad-2: #bae6fd; --title-grad-3: #94a3b8; --title-grad-4: #0c4a6e;
+        }
+        body.theme-valentin {
+            --blob-1: rgba(244,63,94,0.14); --blob-2: rgba(251,113,133,0.12); --blob-3: rgba(190,18,60,0.08);
+            --accent-200: #fecdd3; --accent-300: #fda4af; --accent-400: #fb7185;
+            --accent-500: #f43f5e; --accent-600: #e11d48; --accent-700: #be123c;
+            --accent-800: #9f1239; --accent-900: #881337;
+            --title-grad-1: #ffe4e6; --title-grad-2: #fda4af; --title-grad-3: #f43f5e; --title-grad-4: #881337;
+        }
 
         /* ── Reskin por ocasión: todo lo que usa el índigo "de marca" (botones, campana,
            bordes, textos) pasa por estas variables, para que cambie junto al fondo.
@@ -372,6 +407,14 @@
 
         /* Tamaños responsivos del hero */
         .home-subtitle { color: #64748b; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-top: 1rem; }
+        .occasion-badge {
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            margin-top: 0.6rem; padding: 0.3rem 0.85rem;
+            border-radius: 9999px; font-size: 0.75rem; font-weight: 700;
+            background: color-mix(in srgb, var(--accent-600) 22%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent-500) 45%, transparent);
+            color: var(--accent-300);
+        }
 
         #top-bar { pointer-events: none; }
         #top-bar > * { pointer-events: auto; }
@@ -455,16 +498,44 @@
             const now = new Date();
             const m = now.getMonth() + 1; // 1–12
             const d = now.getDate();
-            const isHalloween   = (m === 10 && d >= 15) || (m === 11 && d === 1);
-            const isNavidad     = (m === 12 && d >= 15) || (m === 1 && d <= 6);
-            const isAniversario = (m === 6 && d === 27); // Aniversario del proyecto (27/6)
-            let themeColor = '#4f46e5'; // índigo, el de siempre
-            if (isAniversario) { document.body.classList.add('theme-aniversario'); themeColor = '#d97706'; }
-            else if (isHalloween) { document.body.classList.add('theme-halloween'); themeColor = '#ea580c'; }
-            else if (isNavidad) { document.body.classList.add('theme-navidad'); themeColor = '#dc2626'; }
+            const isValentin    = (m === 2 && d === 14);
+            const isPrimavera   = (m === 3 && (d === 20 || d === 21));
+            const isVerano      = (m === 6 && d >= 21 && d <= 23);
+            const isAniversario = (m === 6 && d === 27); // Aniversario del proyecto
+            const isOtono       = (m === 9 && (d === 22 || d === 23));
+            const isHalloween   = (m === 10 && d >= 29) || (m === 11 && d === 1);
+            const isInvierno    = (m === 12 && d >= 20 && d <= 22);
+            const isNavidad     = (m === 12 && d >= 23) || (m === 1 && d <= 6);
+
+            // [clase, color de la barra del navegador, emoji + nombre para la etiqueta]
+            let active = null;
+            if (isValentin)         active = ['theme-valentin',    '#e11d48', '💘 San Valentín'];
+            else if (isPrimavera)   active = ['theme-primavera',   '#059669', '🌸 Equinoccio de primavera'];
+            else if (isVerano)      active = ['theme-verano',      '#0d9488', '☀️ Solsticio de verano'];
+            else if (isAniversario) active = ['theme-aniversario', '#d97706', '🎉 Aniversario de La Intersección'];
+            else if (isOtono)       active = ['theme-otono',       '#7c5322', '🍂 Equinoccio de otoño'];
+            else if (isHalloween)   active = ['theme-halloween',   '#ea580c', '🎃 Halloween'];
+            else if (isInvierno)    active = ['theme-invierno',    '#0284c7', '❄️ Solsticio de invierno'];
+            else if (isNavidad)     active = ['theme-navidad',     '#dc2626', '🎄 Navidad'];
+
             const themeMeta = document.querySelector('meta[name="theme-color"]');
-            if (themeMeta) themeMeta.setAttribute('content', themeColor);
+            if (active) {
+                document.body.classList.add(active[0]);
+                if (themeMeta) themeMeta.setAttribute('content', active[1]);
+            } else if (themeMeta) {
+                themeMeta.setAttribute('content', '#4f46e5'); // índigo, el de siempre
+            }
+            // La etiqueta con el nombre de la ocasión vive más abajo en el documento,
+            // así que se rellena aparte, en cuanto el resto del HTML esté listo.
+            window.__occasionLabel = active ? active[2] : null;
         })();
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!window.__occasionLabel) return;
+            document.querySelectorAll('.occasion-badge').forEach(el => {
+                el.textContent = window.__occasionLabel;
+                el.classList.remove('hidden');
+            });
+        });
 
         // ── Easter egg: código Konami (↑↑↓↓←→←→BA) — modo "disco" temporal para la sesión.
         (function konamiEasterEgg() {
@@ -477,7 +548,7 @@
                     if (pos === sequence.length) {
                         pos = 0;
                         document.body.classList.add('theme-konami');
-                        if (typeof showToast === 'function') showToast('🕵️ Caso secreto desbloqueado');
+                        if (typeof showToast === 'function') showToast('🕵️ Modo secreto activado');
                     }
                 } else {
                     pos = (key === sequence[0]) ? 1 : 0;
@@ -536,7 +607,8 @@
             <!-- Hero -->
             <div class="text-center" style="margin-bottom:clamp(1.25rem, 4vh, 2.5rem)">
                 <h1 class="home-title font-extrabold tracking-tight">La Intersección</h1>
-                <p class="home-subtitle">Misterios &middot; Investiga &middot; Resuelve</p>
+                <p class="home-subtitle">Descubre &middot; Investiga &middot; Resuelve</p>
+                <span id="occasion-badge-home" class="occasion-badge hidden"></span>
             </div>
 
             <!-- Bento asimétrico — Misterios es el más grande -->
@@ -642,6 +714,7 @@
         <div class="text-center mb-6 relative">
             <h1 class="section-hero-title text-3xl md:text-4xl tracking-tight">La Intersección</h1>
             <p class="mt-2 text-base text-gray-400">Un juego de misterios semanales.</p>
+            <span id="occasion-badge-app" class="occasion-badge hidden"></span>
         </div>
 
     <!-- Modal de notas: bloc de notas global guardado en localStorage. Un único bloc
