@@ -166,6 +166,30 @@
         @media (prefers-reduced-motion: reduce) {
             .app-blob svg { animation: none; }
         }
+        /* ── Easter egg: código Konami. Tema propio ("modo secreto"), muy marcado,
+           que dura solo la sesión — mismo sistema de variables que los temas por ocasión.
+           El filtro de color animado va en las pantallas de contenido (no en <body>) para
+           no romper el posicionamiento de los elementos "fixed" (barra superior, modales). */
+        body.theme-konami {
+            --blob-1: rgba(236,72,153,0.55); --blob-2: rgba(34,211,238,0.5); --blob-3: rgba(168,85,247,0.45);
+            --accent-200: #fbcfe8; --accent-300: #f472b6; --accent-400: #ec4899;
+            --accent-500: #db2777; --accent-600: #be185d; --accent-700: #9d174d;
+            --accent-800: #831843; --accent-900: #500724;
+            --title-grad-1: #67e8f9; --title-grad-2: #f472b6; --title-grad-3: #c084fc; --title-grad-4: #facc15;
+        }
+        body.theme-konami #home-screen,
+        body.theme-konami #main-app-view {
+            animation: konami-disco 6s linear infinite;
+        }
+        body.theme-konami .app-blob svg { opacity: 1 !important; }
+        @keyframes konami-disco {
+            0%   { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            body.theme-konami #home-screen,
+            body.theme-konami #main-app-view { animation: none; }
+        }
 
         /* ── Tema por ocasión: variables de acento (además del blob de fondo).
            Por defecto son el índigo de siempre; cada tema las redefine. */
@@ -429,6 +453,25 @@
             else if (isNavidad) { document.body.classList.add('theme-navidad'); themeColor = '#dc2626'; }
             const themeMeta = document.querySelector('meta[name="theme-color"]');
             if (themeMeta) themeMeta.setAttribute('content', themeColor);
+        })();
+
+        // ── Easter egg: código Konami (↑↑↓↓←→←→BA) — modo "disco" temporal para la sesión.
+        (function konamiEasterEgg() {
+            const sequence = ['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'];
+            let pos = 0;
+            document.addEventListener('keydown', (e) => {
+                const key = e.key.toLowerCase();
+                if (key === sequence[pos]) {
+                    pos++;
+                    if (pos === sequence.length) {
+                        pos = 0;
+                        document.body.classList.add('theme-konami');
+                        if (typeof showToast === 'function') showToast('🕵️ Caso secreto desbloqueado');
+                    }
+                } else {
+                    pos = (key === sequence[0]) ? 1 : 0;
+                }
+            });
         })();
     </script>
     <a href="#home-screen" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[999] focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">Saltar al contenido principal</a>
