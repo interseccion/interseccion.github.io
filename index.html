@@ -157,7 +157,15 @@
 
         /* Blobs decorativos SVG — orgánicos, no rectángulos */
         .app-blob { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: -1; }
-        .app-blob svg { filter: blur(10px); }
+        .app-blob svg { filter: blur(10px); animation: blob-drift 28s ease-in-out infinite; transform-origin: center; }
+        @keyframes blob-drift {
+            0%   { transform: translate(0, 0) rotate(0deg); }
+            50%  { transform: translate(2%, -3%) rotate(2deg); }
+            100% { transform: translate(-2%, 2%) rotate(-2deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .app-blob svg { animation: none; }
+        }
 
         /* ── Tema por ocasión: variables de acento (además del blob de fondo).
            Por defecto son el índigo de siempre; cada tema las redefine. */
