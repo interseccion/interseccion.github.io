@@ -8961,7 +8961,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('tli-join-btn')?.addEventListener('click', _joinTeamFromLink);
     function _checkAllHashLinks() {
-        handleUrlSharing();
+        // handleUrlSharing() NO se llama aquí: ya se invoca desde loadGames() una vez
+        // que la lista de misterios ha terminado de cargar. Llamarla también aquí (antes
+        // de tener los datos) hacía saltar un "no encontrado" falso, aunque luego sí abriera
+        // bien el misterio al llegar la segunda llamada, la buena.
         _checkTardeShareLink();
         _checkEscapeShareLink();
         _checkPodioShareLink();
