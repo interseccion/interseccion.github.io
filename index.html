@@ -937,8 +937,14 @@
                              </div>
                         </div>
                     </div>
+                    <div class="panel panel-indigo p-8">
+                        <h3 class="text-2xl font-bold text-indigo-400 mb-6">📋 Novedades</h3>
+                        <div id="novedades-list" class="space-y-5">
+                            <p class="text-gray-500 text-sm text-center py-4">⏳ Cargando novedades...</p>
+                        </div>
+                    </div>
                  </div>
-                 <div class="absolute bottom-2 right-2 text-xs text-gray-600">v13.0 — tildes + PARTICIPADOS</div>
+                 <div class="absolute bottom-2 right-2 text-xs text-gray-600" id="app-version-footer"></div>
             </div>
             <!-- ═══ TARDE TAB ════════════════════════════════════════════════════ -->
             <div id="equipos" class="tab-content hidden fade-in">
@@ -1655,6 +1661,7 @@
         const EXAMPLE_GAME_PATH = 'games/ejemplo_resuelto.json';
         const TOUR_EXAMPLE_PATH = 'games/ejemplo.json';
         const ADS_PATH = 'anuncios/actual.json';
+        const NOVEDADES_PATH = 'novedades/actual.json';
         // ✏️ Rutas a los documentos legales completos (relativas a la raíz del repo)
         const PRIVACY_MD_PATH = 'docs/politica-de-privacidad.md';
         const TERMS_MD_PATH   = 'docs/terminos-y-condiciones.md';
@@ -2653,6 +2660,72 @@
             } else if (which === 'terms') {
                 openLegalDoc(TERMS_MD_PATH, '⚖️ Términos y Condiciones');
             }
+            history.replaceState({}, '', `${location.origin}${location.pathname}`);
+        }
+
+        /** Novedades: registro de cambios de la app, en orden — más reciente primero.
+         *  Se edita a mano en novedades/actual.json (mismo espíritu que anuncios/actual.json),
+         *  sin necesidad de tocar código para añadir una entrada nueva. */
+        let novedadesLoaded = false;
+        async function loadNovedades() {
+            const list = document.getElementById('novedades-list');
+            if (!list) return;
+            try {
+                const res = await fetch(`${NOVEDADES_PATH}?v=${Date.now()}`);
+                if (!res.ok) throw new Error();
+                const entradas = await res.json();
+                if (!Array.isArray(entradas) || entradas.length === 0) {
+                    list.innerHTML = `<p class="text-gray-500 text-sm text-center py-4">Aún no hay novedades publicadas.</p>`;
+                } else {
+                    list.innerHTML = entradas.map(n => `
+                        <div id="novedad-${_esc(n.id || '')}" class="border-l-2 border-indigo-500/40 pl-4 rounded-r transition-colors duration-500">
+                            <div class="flex items-baseline gap-2 flex-wrap">
+                                <h4 class="font-bold text-white">${_esc(n.titulo || '')}</h4>
+                                <span class="text-xs text-gray-500">${_esc(n.fecha || '')}</span>
+                                ${n.version ? `<span class="text-xs text-gray-600">· v${_esc(n.version)}</span>` : ''}
+                            </div>
+                            <p class="text-gray-400 text-sm mt-1">${_esc(n.texto || '')}</p>
+                        </div>
+                    `).join('');
+                    // El pie de "Sobre el Proyecto" muestra siempre la versión de la entrada
+                    // más reciente (la primera del array) — así nunca hay que actualizarlo a mano.
+                    const footer = document.getElementById('app-version-footer');
+                    if (footer && entradas[0]?.version) footer.textContent = `v${entradas[0].version}`;
+                }
+            } catch (e) {
+                list.innerHTML = `<p class="text-gray-500 text-sm text-center py-4">No se pudieron cargar las novedades.</p>`;
+            } finally {
+                novedadesLoaded = true;
+            }
+        }
+
+        /** Si se llega con #novedades o #novedades=ID (una entrada concreta), abre "Sobre
+         *  el Proyecto" y hace scroll hasta el changelog — o hasta esa entrada exacta. */
+        function _checkNovedadesShareLink() {
+            const hash = location.hash;
+            if (!hash.startsWith('#novedades')) return;
+            const parts   = hash.substring(1).split('=');
+            const entryId = parts[1] || null;
+
+            showMainApp('sobre');
+
+            let tries = 0;
+            const tryScroll = () => {
+                if (novedadesLoaded) {
+                    const target = entryId ? document.getElementById(`novedad-${entryId}`) : document.getElementById('novedades-list');
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (entryId) {
+                            target.classList.add('bg-indigo-900/30');
+                            setTimeout(() => target.classList.remove('bg-indigo-900/30'), 2500);
+                        }
+                    }
+                } else if (tries < 15) {
+                    tries++;
+                    setTimeout(tryScroll, 300);
+                }
+            };
+            tryScroll();
             history.replaceState({}, '', `${location.origin}${location.pathname}`);
         }
 
@@ -4857,6 +4930,7 @@
                 handleUrlSharing();
                 loadLeaderboard(); // Carga podio + podiumsCache en background, sin bloquear
                 checkAds(); // Comprobar anuncios al cargar juegos
+                loadNovedades(); // Cargar el registro de novedades (independiente de los juegos)
             } catch (error) {
                 const errorHTML = `<p class="text-center text-red-500 col-span-full">Error de carga.</p>`;
                 dom.enCursoContainer.innerHTML = errorHTML; dom.archivoGrid.innerHTML = '';
@@ -6078,8 +6152,19 @@
                     showToast('✅ Sesión restaurada. Recargando…', false);
                     setTimeout(() => location.reload(), 1500);
                 };
+            // Botón especial para tipo 'novedades' — lleva al registro de cambios
+            } else if (notif.link && notif.link.startsWith('#novedades')) {
+                dom.notifDetailLinkBtn.href       = 'javascript:void(0)';
+                dom.notifDetailLinkBtn.textContent = '📋 Ver novedades';
+                dom.notifDetailLinkBtn.classList.remove('hidden');
+                dom.notifDetailLinkBtn.onclick = (e) => {
+                    e.preventDefault();
+                    dom.notifDetailModal.classList.add('hidden');
+                    location.hash = notif.link;
+                    _checkNovedadesShareLink();
+                };
             // Botón de enlace externo (solo si el link no es interno)
-            } else if (notif.link && !notif.link.startsWith('#mystery=') && !notif.link.startsWith('#restore_id=') && !notif.link.startsWith('#team_invite=')) {
+            } else if (notif.link && !notif.link.startsWith('#mystery=') && !notif.link.startsWith('#restore_id=') && !notif.link.startsWith('#team_invite=') && !notif.link.startsWith('#novedades')) {
                 dom.notifDetailLinkBtn.onclick    = null;
                 dom.notifDetailLinkBtn.href       = notif.link;
                 try {
@@ -8970,6 +9055,7 @@ document.addEventListener('DOMContentLoaded', () => {
         _checkPodioShareLink();
         _checkAdShareLink();
         _checkLegalShareLink();
+        _checkNovedadesShareLink();
     }
 
     _checkLinkInvite();
