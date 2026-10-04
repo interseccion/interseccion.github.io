@@ -1679,11 +1679,15 @@
         const SHEET_ID = '1SxSL6T4CiHHGh4RPW-tp4rl3DhXavZ0FveZdbye2buo'; // ← mismo que PUBLIC_SHEET_ID en .gs
         const PRINCIPAL_SHEET  = 'PRINCIPAL';
         const PARTICIPADOS_SHEET = 'PARTICIPADOS';
+        const PISTAS_USADAS_SHEET = 'PISTAS_USADAS';
+        const PU_COL_PUBLIC_ID = 0; // A — mismo layout que en el backend
+        const PU_COL_NAME      = 1; // B
 
         // Mapa de participaciones: mysteryId 2192 n00famero de jugadores que enviaron respuesta
         const participationCountMap = {};
         const userMistPartMap = {}; // publicId → nº misterios distintos participados (col C de PARTICIPADOS)
         const userTotalPartMap = {}; // publicId → suma total de participaciones, incl. reintentos (col B de PARTICIPADOS)
+        const userCluesUsedMap = {}; // publicId → { mysteryId: pistas reveladas al acertar } (de PISTAS_USADAS)
 
         let allGames = [];
         let allSeasons = [];
@@ -1977,6 +1981,35 @@
                         }
                     } catch(ep) {
                         console.log('[Sheets] PARTICIPADOS no disponible:', ep);
+                    }
+
+                    // 5. Hoja PISTAS_USADAS → pistas reveladas en el momento exacto del acierto,
+                    // por usuario y misterio (para el "compartir resultado" tipo Wordle).
+                    // Estructura: Fila1=cabeceras (misterios desde col C) | Fila2+=usuarios (A=ID, B=Nombre, C+=pistas)
+                    try {
+                        const puBase = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(PISTAS_USADAS_SHEET)}&headers=0`;
+                        const [rPuHead, rPuUsers] = await Promise.all([
+                            fetch(`${puBase}&range=1:1`),
+                            fetch(`${puBase}&range=2:9999`)
+                        ]);
+                        const [tPuHead, tPuUsers] = await Promise.all([parseGviz(rPuHead), parseGviz(rPuUsers)]);
+                        const puHeaderRow = tPuHead.rows[0]?.c || [];
+                        for (const row of (tPuUsers?.rows || [])) {
+                            const c     = row?.c || [];
+                            const idPub = c[PU_COL_PUBLIC_ID]?.v?.toString()?.trim();
+                            if (!idPub) continue;
+                            const cluesMap = {};
+                            for (let i = PU_COL_NAME + 1; i < puHeaderRow.length; i++) {
+                                const mid  = puHeaderRow[i]?.v?.toString()?.trim();
+                                const used = c[i]?.v;
+                                if (mid && used !== undefined && used !== null && used !== '') {
+                                    cluesMap[mid] = Math.round(parseFloat(used));
+                                }
+                            }
+                            if (Object.keys(cluesMap).length) userCluesUsedMap[idPub] = cluesMap;
+                        }
+                    } catch(ep) {
+                        console.log('[Sheets] PISTAS_USADAS no disponible:', ep);
                     }
 
                     return { users, mysteryColMap };
@@ -3681,6 +3714,30 @@
             document.body.removeChild(textArea);
         }
 
+        /** Compartir resultado (tipo Wordle, sin spoiler): cuántas pistas necesitaste para
+         *  acertar, como barra de progreso, con el nombre del misterio metido en la frase.
+         *  Usa el típico menú de compartir del sistema (WhatsApp, Instagram...) si el
+         *  navegador lo soporta, y si no, copia el texto al portapapeles como respaldo. */
+        function shareResult(game) {
+            const cluesUsed = userCluesUsedMap[userId]?.[game.id];
+            const totalClues = game.clues?.length || 0;
+
+            if (cluesUsed === undefined || !totalClues) {
+                showToast('Aún no tengo el dato de pistas para este misterio.', true);
+                return;
+            }
+
+            const barra = '▰'.repeat(cluesUsed) + '▱'.repeat(Math.max(0, totalClues - cluesUsed));
+            const url   = `${window.location.origin}${window.location.pathname}#mystery=${game.id}`;
+            const texto = `He resuelto la intersección "${game.title || ''}" con solo ${cluesUsed} pista${cluesUsed === 1 ? '' : 's'}. ¿Te atreves a intentarlo?\n${barra} (${cluesUsed}/${totalClues} pistas)\n${url}`;
+
+            if (navigator.share) {
+                navigator.share({ title: 'La Intersección', text: texto }).catch(() => {});
+            } else {
+                copyToClipboard(texto, '📋 Resultado copiado — ¡pégalo donde quieras!');
+            }
+        }
+
         function getOrdinal(n) {
             const ordinals = ["Primera", "Segunda", "Tercera", "Cuarta", "Quinta", "Sexta", "Séptima", "Octava", "Novena", "Décima"];
             return (n > 0 && n <= ordinals.length) ? ordinals[n - 1] : `${n}ª`;
@@ -4098,7 +4155,8 @@
                             }
                         });
                     }
-                    footerHTML = `<div id="scoring-live-banner" class="hidden mb-3"></div><div class="flex flex-wrap justify-center gap-4"><button class="back-to-summary-btn bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg">Volver</button><button class="download-html-btn bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg">Descargar</button><button class="share-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" data-game-id="${game.id}">Compartir</button>${guessBtn}</div>`;
+                    const shareResultBtn = userCorrectGames.has(game.id) ? `<button class="share-result-btn bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg" data-game-id="${game.id}">🧩 Compartir resultado</button>` : '';
+                    footerHTML = `<div id="scoring-live-banner" class="hidden mb-3"></div><div class="flex flex-wrap justify-center gap-4"><button class="back-to-summary-btn bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg">Volver</button><button class="download-html-btn bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg">Descargar</button><button class="share-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" data-game-id="${game.id}">Compartir</button>${shareResultBtn}${guessBtn}</div>`;
                     break;
 
                 case 'single-clue':
@@ -5381,6 +5439,10 @@
                 if (target.matches('.download-html-btn')) downloadGameAsHTML(currentGameData);
                 if (target.matches('.download-clue-btn')) downloadSingleClueAsHTML(currentGameData, parseInt(target.dataset.clueIndex, 10));
                 if (target.matches('.share-btn')) copyToClipboard(`${window.location.origin}${window.location.pathname}#mystery=${target.dataset.gameId}`);
+                if (target.matches('.share-result-btn')) {
+                    const g = allGames.find(x => x.id === target.dataset.gameId);
+                    if (g) shareResult(g);
+                }
                 if (target.matches('.share-clue-btn')) copyToClipboard(`${window.location.origin}${window.location.pathname}#mystery=${target.dataset.gameId}&clue=${target.dataset.clueIndex}`);
                 if (target.matches('#play-solved-btn')) { _beginModalNavigation(); revealedClueCount = 1; renderModal(currentGameData, 'play-solved'); }
                 if (target.matches('.next-clue-btn')) { revealedClueCount++; renderModal(currentGameData, 'play-solved'); }
