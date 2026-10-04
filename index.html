@@ -4116,7 +4116,8 @@
                     }
 
                     contentHTML = `<div class="space-y-4">${game.showMystery && game.mystery ? `<div class="bg-gray-700/50 p-4 rounded-lg"><p class="text-sm text-gray-400"><strong>Lo que buscamos es:</strong> ${game.mystery}</p></div>` : ''}<div class="bg-gray-900/50 p-4 rounded-lg border border-gray-700"><p class="text-gray-300">${game.notes || 'Descripción del misterio...'}</p></div>${mysteryStatsHTML ? mysteryStatsHTML : ''}${nextClueInfoHTML}${summaryScoreHTML ? `<div>${summaryScoreHTML}</div>` : ''}${cluesIndex}</div>`;
-                    footerHTML = `<div class="flex flex-wrap justify-center gap-4"><button class="share-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" data-game-id="${game.id}">Compartir</button><button class="view-all-clues-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg">Mostrar Pistas y Resolver</button></div>`;
+                    const shareResultSummaryIndexBtn = userCorrectGames.has(game.id) ? `<button class="share-result-btn bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg" data-game-id="${game.id}">🧩 Compartir resultado</button>` : '';
+                    footerHTML = `<div class="flex flex-wrap justify-center gap-4"><button class="share-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" data-game-id="${game.id}">Compartir</button><button class="view-all-clues-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg">Mostrar Pistas y Resolver</button>${shareResultSummaryIndexBtn}</div>`;
                     break;
 
                 case 'all-clues':
