@@ -3719,7 +3719,7 @@
          *  Usa el típico menú de compartir del sistema (WhatsApp, Instagram...) si el
          *  navegador lo soporta, y si no, copia el texto al portapapeles como respaldo. */
         function shareResult(game) {
-            const cluesUsed = userCluesUsedMap[userId]?.[game.id];
+            const cluesUsed = userCluesUsedMap[currentPublicId()]?.[game.id];
             const totalClues = game.clues?.length || 0;
 
             if (cluesUsed === undefined || !totalClues) {
