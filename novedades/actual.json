@@ -2,9 +2,9 @@
   {
   "id": "2026-10-04-fno",
   "fecha": "04/10/2026",
-  "version": "1.36.0-1",
+  "version": "1.36.0-3",
   "titulo": "Compartir progreso",
-  "texto": "¡Hola! Tras más de un año de proyecto aún no había metido una de las funcionalidades más importantes... ¡Compartir para picar a tus colegas! A partir de ahora, puedes ir a cualquier misterio que hayas resuelto y compartir tus dotes. ¡A ver si con un poco de suerte se pican y lo intentan!"
+  "texto": "¡Hola! Tras más de un año de proyecto aún no había metido una de las funcionalidades más importantes... ¿Has resuelto un misterio con pocas pistas? Ahora puedes presumir de ello sin hacer spoiler a nadie. Busca el botón «🧩 Compartir resultado» en cualquier misterio que ya hayas acertado (sale en la tarjeta, en el índice de pistas, en el resumen y viendo todas las pistas), y comparte una barrita con cuántas pistas necesitaste, sin revelar ni la solución ni el misterio en sí. ¿Te ves capaz conseguir menos pistas que tus amigos? ¡Pícales y a ver quién gana!"
 },
   {
     "id": "2026-09-21-001",
