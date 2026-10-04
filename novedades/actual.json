@@ -1,5 +1,12 @@
 [
   {
+  "id": "2026-10-04-fno",
+  "fecha": "04/10/2026",
+  "version": "1.36.0-1",
+  "titulo": "Compartir progreso",
+  "texto": "¡Hola! Tras más de un año de proyecto aún no había metido una de las funcionalidades más importantes... ¡Compartir para picar a tus colegas! A partir de ahora, puedes ir a cualquier misterio que hayas resuelto y compartir tus dotes. ¡A ver si con un poco de suerte se pican y lo intentan!"
+},
+  {
     "id": "2026-09-21-001",
     "fecha": "21/09/2026",
     "version": "1.35.1",
