@@ -1,5 +1,12 @@
 [
   {
+  "id": "2026-10-05-8hs",
+  "fecha": "05/10/2026",
+  "version": "1.36.4",
+  "titulo": "Más estadísticas",
+  "texto": "Entra en cualquier perfil (incluido el tuyo, claro) y verás dos datos nuevos junto a los de siempre: cuántas pistas sueles necesitar de media antes de acertar, y un número aproximado de fallos. :)"
+},
+  {
   "id": "2026-10-04-fno",
   "fecha": "04/10/2026",
   "version": "1.36.0-3",
