@@ -1,5 +1,12 @@
 [
   {
+  "id": "2026-10-05-sln",
+  "fecha": "05/10/2026",
+  "version": "1.36.5",
+  "titulo": "FAQ",
+  "texto": "Por si acaso también he metido una sección de preguntas frecuentes."
+},
+  {
   "id": "2026-10-05-8hs",
   "fecha": "05/10/2026",
   "version": "1.36.4",
