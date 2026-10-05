@@ -4615,6 +4615,35 @@
                     </div>
                 </div>
 
+                <!-- ── Histórico — promedio de pistas y fallos aproximados.
+                     TODO (futuro, necesita trabajo de backend, ver conversación del
+                     21/09/2026): racha más larga histórica (solo se guarda la actual,
+                     habría que guardar también un récord aparte) y veces en el podio
+                     1º/2º/3º histórico (habría que mirar el podio de cada misterio
+                     resuelto uno a uno, o agregarlo server-side). -->
+                ${(() => {
+                    const cluesMap = userCluesUsedMap[userData.id];
+                    const cluesValues = cluesMap ? Object.values(cluesMap) : [];
+                    const avgClues = cluesValues.length
+                        ? (cluesValues.reduce((a,b) => a+b, 0) / cluesValues.length).toFixed(1)
+                        : null;
+
+                    const totalPart = userTotalPartMap[userData.id] || 0;
+                    const resueltos = userData.solvedGames.length;
+                    const fallosAprox = Math.max(0, totalPart - resueltos);
+
+                    return `<div class="grid grid-cols-2 gap-2 mb-5">
+                        <div class="rounded-xl p-2.5 text-center" style="background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2)">
+                            <div class="text-lg font-black text-purple-400">${avgClues ?? '—'}</div>
+                            <div class="text-[10px] text-gray-400 mt-0.5 leading-tight">🔑 Pistas de media</div>
+                        </div>
+                        <div class="rounded-xl p-2.5 text-center" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2)">
+                            <div class="text-lg font-black text-red-400">${totalPart > 0 ? fallosAprox : '—'}</div>
+                            <div class="text-[10px] text-gray-400 mt-0.5 leading-tight">❌ Fallos (aprox.)</div>
+                        </div>
+                    </div>`;
+                })()}
+
                 <!-- ── Contenido asíncrono (temporadas, juegos) ── -->
                 <div id="profile-async-content">
                     <div class="space-y-2">
