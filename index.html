@@ -488,6 +488,60 @@
         /* ── Main app: espacio para la top-bar fija ── */
         #main-app-view { padding-top: 4.5rem; }
         @media (min-width: 768px) { #main-app-view { padding-top: 2.5rem; } }
+
+        .flotante { 
+    position: fixed; 
+    left: 1rem; /* Cambiado de right a left */
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); 
+    z-index: 4;
+    display: flex; 
+    align-items: center; 
+    gap: .6rem; 
+    text-decoration: none; 
+}
+.flotante-logo { 
+    display: block; 
+    width: 3.5rem; 
+    height: 3.5rem; 
+    border-radius: 50%; 
+    overflow: hidden; 
+    background: #fff;
+    border: 2px solid var(--tinta); 
+    box-shadow: 0 2px 8px rgba(27, 53, 144, .35); 
+    transition: transform .2s; 
+}
+.flotante-logo img { 
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transform: scale(1.3); 
+}
+.flotante-txt { 
+    background: var(--tinta); 
+    color: var(--papel); 
+    font-weight: 600; 
+    font-size: .9rem; 
+    padding: .35rem .7rem;
+    border-radius: 3px; 
+    white-space: nowrap; 
+    opacity: 0; 
+    transform: translateX(-6px); /* Cambiado a negativo para que desplace hacia la izquierda al ocultarse */
+    pointer-events: none; 
+    transition: opacity .2s, transform .2s; 
+}
+.flotante:hover .flotante-txt, .flotante:focus-visible .flotante-txt { 
+    opacity: 1; 
+    transform: none; 
+}
+.flotante:hover .flotante-logo, .flotante:focus-visible .flotante-logo { 
+    transform: scale(1.06); 
+}
+.flotante:focus-visible { 
+    outline: 3px solid var(--rojo); 
+    outline-offset: 3px; 
+    border-radius: 3rem; 
+}
     </style>
 </head>
 <body class="text-gray-200">
@@ -1477,6 +1531,11 @@
     <!-- Toast Notification -->
     <div id="toast-notification" role="status" aria-live="polite"></div>
 
+    <a class="flotante" href="https://interseccion.github.io/restocero" target="_blank" rel="noopener" aria-label="Ir a Resto Cero" title="Ir a Resto Cero">
+    <span class="flotante-logo"><img src="img/restocero.png" alt="" width="144" height="144"></span>
+    <span class="flotante-txt">Ir a Resto Cero</span>
+    </a>
+    
     <!-- Modal de detalle de notificación -->
     <div id="notif-detail-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-[95]">
         <div class="bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl w-full max-w-md">
