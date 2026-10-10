@@ -1,0 +1,11 @@
+{
+  "id": "0c0baa72-1af6-4fa3-a947-87c1a1d08405",
+  "date": "2026-10-10T09:47:12.939Z",
+  "version": "2026-10-10",
+  "title": "¡Nuevo juego!",
+  "content": "No sé si te habrás fijado en esa bolita que aparece abajo a la izquierda... ¡Pero es un nuevo juego que estoy desarrollando! Trata de descubrir qué sobra de una serie de opciones. Estoy aún probando el formato, así que cualquier opinión sería de agradecer...",
+  "btnText": "¡Ya lo miraré!",
+  "actionType": "link",
+  "actionLabel": "A ver, déjame mirar",
+  "actionValue": "https://interseccion.github.io/restocero/"
+}
