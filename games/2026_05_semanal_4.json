@@ -12,13 +12,13 @@
   "clues": [
     {
       "type": "image",
-      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista1.png",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista2.png",
       "text": "(Representación artística).",
       "publishDate": "2026-10-16T18:00"
     },
     {
       "type": "image",
-      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista2.png",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista1.png",
       "text": null,
       "publishDate": "2026-10-23T18:00"
     },
