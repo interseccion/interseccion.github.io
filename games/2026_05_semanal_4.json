@@ -1,0 +1,48 @@
+{
+  "id": "2026_05_semanal_4",
+  "title": "2026 - Semanal 4",
+  "type": "Semanal",
+  "difficulty": "Fácil",
+  "mystery": "Un evento",
+  "showMystery": false,
+  "notes": "",
+  "startDate": "2026-10-15",
+  "googleFormLink": "https://forms.gle/VVMt2tku3YKPMQsSA",
+  "formEntryId": "",
+  "clues": [
+    {
+      "type": "image",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista1.png",
+      "text": "(Representación artística).",
+      "publishDate": "2026-10-16T18:00"
+    },
+    {
+      "type": "image",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista2.png",
+      "text": null,
+      "publishDate": "2026-10-23T18:00"
+    },
+    {
+      "type": "audio",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista3.mp3",
+      "text": null,
+      "publishDate": "2026-10-30T18:00"
+    },
+    {
+      "type": "image",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista4.png",
+      "text": null,
+      "publishDate": "2026-11-06T18:00"
+    }
+  ],
+  "isSolved": false,
+  "endDate": "",
+  "solution": "",
+  "winner": "",
+  "winnerId": "",
+  "explanation": "",
+  "winnerExplanation": "",
+  "bibliography": "",
+  "utd": 168,
+  "lastUpdated": "2026-10-15T17:10:41.242Z"
+}
