@@ -23,14 +23,14 @@
       "publishDate": "2026-10-23T18:00"
     },
     {
-      "type": "audio",
-      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista3.mp3",
+      "type": "image",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista4.png",
       "text": null,
       "publishDate": "2026-10-30T18:00"
     },
     {
-      "type": "image",
-      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista4.png",
+      "type": "audio",
+      "content": "https://raw.githubusercontent.com/interseccion/archivos/refs/heads/main/2026/5pista3.mp3",
       "text": null,
       "publishDate": "2026-11-06T18:00"
     }
